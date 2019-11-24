@@ -1,7 +1,6 @@
 #!/bin/bash
 
 set -x
-sudo su
 function wait_for_jenkins()
 {
   while (( 1 )); do

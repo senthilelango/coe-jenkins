@@ -22,7 +22,7 @@ resource "aws_security_group_rule" "jenkins_server_from_source_ingress_ssh" {
   from_port         = 22
   to_port           = 22
   protocol          = "tcp"
-  security_group_id = "jenkins_server"
+  security_group_id = "${aws_security_group.jenkins_server.id}"
   cidr_blocks       = ["0.0.0.0/0"]
   description       = "ssh to jenkins_server"
 }
@@ -33,21 +33,21 @@ resource "aws_security_group_rule" "jenkins_server_from_source_ingress_webui" {
   from_port         = 8080
   to_port           = 8080
   protocol          = "tcp"
-  security_group_id = "jenkins_server"
+  security_group_id = "${aws_security_group.jenkins_server.id}"
   cidr_blocks       = ["0.0.0.0/0"]
   description       = "jenkins server web"
 }
 
 
-resource "aws_security_group_rule" "jenkins_server_from_source_ingress_webui_1" {
-  type              = "ingress"
-  from_port         = 80
-  to_port           = 80
-  protocol          = "http"
-  security_group_id = "jenkins_server"
-  cidr_blocks       = ["0.0.0.0/0"]
-  description       = "jenkins server web"
-}
+# resource "aws_security_group_rule" "jenkins_server_from_source_ingress_webui_1" {
+#   type              = "ingress"
+#   from_port         = 80
+#   to_port           = 80
+#   protocol          = "http"
+#   security_group_id = "${aws_security_group.jenkins_server.id}"
+#   cidr_blocks       = ["0.0.0.0/0"]
+#   description       = "jenkins server web"
+# }
 
 
 # JNLP
@@ -56,21 +56,50 @@ resource "aws_security_group_rule" "jenkins_server_from_source_ingress_jnlp" {
   from_port         = 33453
   to_port           = 33453
   protocol          = "tcp"
-  security_group_id = "jenkins_server"
+  security_group_id = "${aws_security_group.jenkins_server.id}"
   cidr_blocks       = ["0.0.0.0/0"]
   description       = "jenkins server JNLP Connection"
+}
+
+resource "aws_security_group_rule" "jenkins_server_outbound_all_80_in" {
+  type              = "ingress"
+  from_port         = 80
+  to_port           = 80
+  protocol          = "tcp"
+  security_group_id = "${aws_security_group.jenkins_server.id}"
+  cidr_blocks       = ["0.0.0.0/0"]
+  description       = "allow jenkins servers for outbound yum"
+}
+
+resource "aws_security_group_rule" "jenkins_server_outbound_all_443_in" {
+  type              = "ingress"
+  from_port         = 443
+  to_port           = 443
+  protocol          = "tcp"
+  security_group_id = "${aws_security_group.jenkins_server.id}"
+  cidr_blocks       = ["0.0.0.0/0"]
+  description       = "allow jenkins servers for outbound yum"
 }
 
 ###############################################################################
 # ALL OUTBOUND
 ###############################################################################
 
+resource "aws_security_group_rule" "jenkins_server_to_other_machines_ssh_0" {
+  type              = "egress"
+  from_port         = 0
+  to_port           = 0
+  protocol          = "tcp"
+  security_group_id = "${aws_security_group.jenkins_server.id}"
+  cidr_blocks       = ["0.0.0.0/0"]
+  description       = "allow jenkins servers to ssh to other machines"
+}
 resource "aws_security_group_rule" "jenkins_server_to_other_machines_ssh" {
   type              = "egress"
   from_port         = 22
   to_port           = 22
   protocol          = "tcp"
-  security_group_id = "jenkins_server"
+  security_group_id = "${aws_security_group.jenkins_server.id}"
   cidr_blocks       = ["0.0.0.0/0"]
   description       = "allow jenkins servers to ssh to other machines"
 }
@@ -80,7 +109,7 @@ resource "aws_security_group_rule" "jenkins_server_outbound_all_80" {
   from_port         = 80
   to_port           = 80
   protocol          = "tcp"
-  security_group_id = "$jenkins_server"
+  security_group_id = "${aws_security_group.jenkins_server.id}"
   cidr_blocks       = ["0.0.0.0/0"]
   description       = "allow jenkins servers for outbound yum"
 }
@@ -90,7 +119,7 @@ resource "aws_security_group_rule" "jenkins_server_outbound_all_443" {
   from_port         = 443
   to_port           = 443
   protocol          = "tcp"
-  security_group_id = "jenkins_server"
+  security_group_id = "${aws_security_group.jenkins_server.id}"
   cidr_blocks       = ["0.0.0.0/0"]
   description       = "allow jenkins servers for outbound yum"
 }

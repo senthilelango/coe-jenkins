@@ -15,13 +15,14 @@ resource "aws_key_pair" "jenkins_server" {
 }
 
 # lookup the security group of the Jenkins Server
-# data "aws_security_group" "jenkins_server" {
-#   # name = "jenkins*"
-#   filter {
-#     name   = "group-name"
-#     values = ["*jenkins_server*"]
-#   }
-# }
+data "aws_security_group" "jenkins_server" {
+   id = "${aws_security_group.jenkins_server.id}"
+  # name = "jenkins*"
+  # filter {
+  #   name   = "Group_Name"
+  #   values = ["jenkins_server*"]
+  # }
+}
 
 # userdata for the Jenkins server ...
 data "template_file" "jenkins_server" {
@@ -43,7 +44,7 @@ resource "aws_instance" "jenkins_server" {
   instance_type          		= "t2.micro"
   key_name               		= "${aws_key_pair.jenkins_server.key_name}"
   subnet_id              		= "${data.aws_subnet.filtered_subnets.id}"
-  vpc_security_group_ids 		= ["jenkins_server"]
+  vpc_security_group_ids 		= ["${data.aws_security_group.jenkins_server.id}"]
   iam_instance_profile   		= "Admin"
   user_data              		= "${data.template_file.jenkins_server.rendered}"
 
