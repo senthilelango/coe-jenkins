@@ -50,7 +50,7 @@
     "variables": {
       "ami-description": "Amazon Linux for Jenkins Master and Slave ({{isotime \"2006-01-02-15-04-05\"}})",
       "ami-name": "amazon-linux-for-jenkins-{{isotime \"2006-01-02-15-04-05\"}}",
-      "aws_access_key": "AKIAXXFZRLIBVFJCJMNZ",
-      "aws_secret_key": "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"
+      "aws_access_key": "abcd",
+      "aws_secret_key": "efgh"
     }
 }
