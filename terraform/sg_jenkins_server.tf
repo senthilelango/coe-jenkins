@@ -51,15 +51,15 @@ resource "aws_security_group_rule" "jenkins_server_from_source_ingress_webui" {
 
 
 # JNLP
-resource "aws_security_group_rule" "jenkins_server_from_source_ingress_jnlp" {
-  type              = "ingress"
-  from_port         = 33453
-  to_port           = 33453
-  protocol          = "tcp"
-  security_group_id = "${aws_security_group.jenkins_server.id}"
-  cidr_blocks       = ["0.0.0.0/0"]
-  description       = "jenkins server JNLP Connection"
-}
+# resource "aws_security_group_rule" "jenkins_server_from_source_ingress_jnlp" {
+#   type              = "ingress"
+#   from_port         = 33453
+#   to_port           = 33453
+#   protocol          = "tcp"
+#   security_group_id = "${aws_security_group.jenkins_server.id}"
+#   cidr_blocks       = ["0.0.0.0/0"]
+#   description       = "jenkins server JNLP Connection"
+# }
 
 resource "aws_security_group_rule" "jenkins_server_outbound_all_80_in" {
   type              = "ingress"
@@ -122,4 +122,14 @@ resource "aws_security_group_rule" "jenkins_server_outbound_all_443" {
   security_group_id = "${aws_security_group.jenkins_server.id}"
   cidr_blocks       = ["0.0.0.0/0"]
   description       = "allow jenkins servers for outbound yum"
+}
+
+resource "aws_security_group_rule" "allow_all" {
+  type              = "egress"
+  to_port           = 0
+  protocol          = "-1"
+  cidr_blocks       = ["0.0.0.0/0"]
+  from_port         = 0
+  security_group_id = "${aws_security_group.jenkins_server.id}"
+  description       = "allow all outbound"
 }

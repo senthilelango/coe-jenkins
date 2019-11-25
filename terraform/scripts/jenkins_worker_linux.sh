@@ -1,7 +1,6 @@
 #!/bin/bash
 
 set -x
-
 function wait_for_jenkins ()
 {
     echo "Waiting jenkins to launch on 8080..."

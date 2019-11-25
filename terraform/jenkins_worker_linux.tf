@@ -30,7 +30,7 @@ data "template_file" "userdata_jenkins_worker_linux" {
     server_ip   = "${aws_instance.jenkins_server.private_ip}"
     worker_pem  = "${data.local_file.jenkins_worker_pem.content}"
     jenkins_username = "admin"
-    jenkins_password = "mysupersecretpassword"
+    jenkins_password = "admin"
   }
 }
 
@@ -66,8 +66,8 @@ resource "aws_launch_configuration" "jenkins_worker_linux" {
 resource "aws_autoscaling_group" "jenkins_worker_linux" {
   name                      = "dev-jenkins-worker-linux"
   min_size                  = "1"
-  max_size                  = "2"
-  desired_capacity          = "2"
+  max_size                  = "3"
+  desired_capacity          = "1"
   health_check_grace_period = 60
   health_check_type         = "EC2"
   vpc_zone_identifier       = ["${data.aws_subnet.filtered_subnets.id}"]

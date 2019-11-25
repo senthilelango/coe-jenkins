@@ -10,7 +10,7 @@ data "aws_ami" "jenkins_server" {
 }
 
 resource "aws_key_pair" "jenkins_server" {
-  key_name   = "jenkins_server"
+  key_name   = "jenkins"
   public_key = "${file("jenkins_server.pub")}"
 }
 
