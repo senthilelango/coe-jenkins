@@ -30,7 +30,7 @@ data "template_file" "jenkins_server" {
 
   vars ={
     env = "default"
-    jenkins_admin_password = "mysupersecretpassword"
+    jenkins_admin_password = "admin"
   }
 }
 

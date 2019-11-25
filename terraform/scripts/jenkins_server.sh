@@ -1,6 +1,7 @@
 #!/bin/bash
 
 set -x
+sudo su
 function wait_for_jenkins()
 {
   while (( 1 )); do
@@ -82,7 +83,7 @@ function install_packages ()
   #firewall-cmd --reload
   systemctl enable jenkins
   systemctl restart jenkins
-  sleep 10
+  sleep 100
 }
 
 function configure_jenkins_server ()

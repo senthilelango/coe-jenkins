@@ -1,6 +1,7 @@
 #!/bin/bash
 
 set -x
+sudo su
 function wait_for_jenkins ()
 {
     echo "Waiting jenkins to launch on 8080..."

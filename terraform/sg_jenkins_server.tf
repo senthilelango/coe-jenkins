@@ -27,6 +27,15 @@ resource "aws_security_group_rule" "jenkins_server_from_source_ingress_ssh" {
   description       = "ssh to jenkins_server"
 }
 
+resource "aws_security_group_rule" "jenkins_server_from_source_ingress_jnlp" {
+  type              = "ingress"
+  from_port         = 33453
+  to_port           = 33453
+  protocol          = "tcp"
+  security_group_id = "${aws_security_group.jenkins_server.id}"
+  cidr_blocks       = ["0.0.0.0/0"]
+  description       = "jenkins server JNLP Connection"
+}
 # web
 resource "aws_security_group_rule" "jenkins_server_from_source_ingress_webui" {
   type              = "ingress"

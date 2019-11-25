@@ -9,7 +9,7 @@ data "aws_ami" "jenkins_worker_linux" {
 }
 
 resource "aws_key_pair" "jenkins_worker_linux" {
-  key_name   = "jenkins_worker_linux"
+  key_name   = "jenkins_worker"
   public_key = "${file("jenkins_worker.pub")}"
 }
 
@@ -65,9 +65,9 @@ resource "aws_launch_configuration" "jenkins_worker_linux" {
 
 resource "aws_autoscaling_group" "jenkins_worker_linux" {
   name                      = "dev-jenkins-worker-linux"
-  min_size                  = "1"
+  min_size                  = "2"
   max_size                  = "3"
-  desired_capacity          = "1"
+  desired_capacity          = "2"
   health_check_grace_period = 60
   health_check_type         = "EC2"
   vpc_zone_identifier       = ["${data.aws_subnet.filtered_subnets.id}"]
