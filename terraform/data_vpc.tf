@@ -3,6 +3,9 @@ data "aws_vpc" "default_vpc" {
   default = true
 }
 
+
+
+
 output "vpc_id_sk" {
     value = "${data.aws_vpc.default_vpc.id}"
 }
@@ -12,6 +15,14 @@ data "aws_subnet_ids" "default_public" {
   vpc_id = "${data.aws_vpc.default_vpc.id}"
 
 }
+    
+
+output "vpc_id_sk1" {
+    value = "${data.aws_subnet_ids.default_public.ids}"
+}
+
+
+
 
 data "aws_subnet" "filtered_subnets" {
   # count = "${length(data.aws_subnet_ids.default_public.ids)}"
