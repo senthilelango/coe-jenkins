@@ -1,3 +1,3 @@
-# Jenkins setup
+# Jenkins Setup
 
 sk
