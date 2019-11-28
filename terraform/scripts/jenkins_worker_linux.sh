@@ -51,7 +51,7 @@ function slave_setup()
     PASSWORD="${jenkins_password}"
 
     SLAVE_IP=$(ip -o -4 addr list ${device_name} | head -n1 | awk '{print $4}' | cut -d/ -f1)
-    NODE_NAME=$(echo "jenkins-slave-linux-$SLAVE_IP" | tr '.' '-')
+    NODE_NAME=$(echo "S.K-jenkins-slave-linux-$SLAVE_IP" | tr '.' '-')
     NODE_SLAVE_HOME="/opt/jenkins-slave"
     EXECUTORS=2
     SSH_PORT=22

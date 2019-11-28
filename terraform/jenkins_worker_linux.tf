@@ -70,7 +70,7 @@ resource "aws_autoscaling_group" "jenkins_worker_linux" {
   desired_capacity          = "2"
   health_check_grace_period = 60
   health_check_type         = "EC2"
-  vpc_zone_identifier       = ["${data.aws_subnet.filtered_subnets.id}","subnet-40ebbf0a"]
+  vpc_zone_identifier       = "${data.aws_subnet_ids.default_public.ids}"
   launch_configuration      = "${aws_launch_configuration.jenkins_worker_linux.name}"
   termination_policies      = ["OldestLaunchConfiguration"]
   wait_for_capacity_timeout = "10m"
