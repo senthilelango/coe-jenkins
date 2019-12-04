@@ -10,6 +10,10 @@ sudo yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.
 
 sudo yum update -y
 
+curl -LO https://storage.googleapis.com/kubernetes-release/release/v1.16.0/bin/linux/amd64/kubectl
+chmod +x ./kubectl
+sudo mv ./kubectl /usr/local/bin/kubectl
+
 sleep 10
 
 # Setting up Docker
@@ -19,7 +23,7 @@ sudo usermod -a -G docker ec2-user
 # Just to be safe removing previously available java if present
 sudo yum remove -y java
 
-sudo yum install -y python2-pip jq unzip vim tree biosdevname nc mariadb bind-utils at screen tmux xmlstarlet git java-1.8.0-openjdk nc gcc-c++ make nodejs
+sudo yum install -y python2-pip jq unzip vim tree biosdevname nc mariadb bind-utils at screen tmux xmlstarlet git java-1.8.0-openjdk-devel nc gcc-c++ make nodejs
 
 sudo -H pip install awscli bcrypt
 sudo -H pip install --upgrade awscli

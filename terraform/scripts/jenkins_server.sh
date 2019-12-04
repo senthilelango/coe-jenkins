@@ -108,7 +108,7 @@ function configure_jenkins_server ()
   cd $plugins_dir || { echo "unable to chdir to [$plugins_dir]"; exit 1; }
 
   # List of plugins that are needed to be installed 
-  plugin_list="git-client git github-api github-oauth github MSBuild ssh-slaves workflow-aggregator ws-cleanup"
+  plugin_list="git-client git github-api github-oauth github MSBuild ssh-slaves workflow-aggregator ws-cleanup pipeline-maven aws-java-sdk docker-plugin ocker-java-api"
 
   # remove existing plugins, if any ...
   rm -rfv $plugin_list
