@@ -108,18 +108,25 @@ function configure_jenkins_server ()
   cd $plugins_dir || { echo "unable to chdir to [$plugins_dir]"; exit 1; }
 
   # List of plugins that are needed to be installed 
-  plugin_list="git-client git github-api github-oauth github MSBuild ssh-slaves workflow-aggregator ws-cleanup pipeline-maven aws-java-sdk docker-plugin docker-java-api chromedriver shiningpanda python nodejs backup"
+  plugin_list="git-client git github-api github-oauth github MSBuild ssh-slaves workflow-aggregator ws-cleanup pipeline-maven aws-java-sdk docker-plugin docker-java-api chromedriver shiningpanda python nodejs backup pyenv-pipeline amazon-ecs
+"
 
   # remove existing plugins, if any ...
   rm -rfv $plugin_list
 
 #selenium needs
 
-wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
-sudo sh -c 'echo "deb https://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list'
-sudo apt-get update
+wget https://dl.google.com/linux/direct/google-chrome-stable_current_x86_64.rpm
 
-sudo apt-get install google-chrome-stable
+yum localinstall google-chrome-stable_current_x86_64.rpm -y
+
+wget https://chromedriver.storage.googleapis.com/2.41/chromedriver_linux64.zip
+unzip chromedriver_linux64.zip
+
+sudo mv chromedriver /usr/bin/chromedriver
+sudo chown root:root /usr/bin/chromedriver
+sudo chmod +x /usr/bin/chromedriver
+
 pip install behave
 pip install selenium
 pip install virtualenv
