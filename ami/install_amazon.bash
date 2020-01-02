@@ -71,6 +71,23 @@ sudo yum install pdagent pdagent-integrations -y
 sudo yum update pdagent pdagent-integrations
 
 
+wget https://dl.google.com/linux/direct/google-chrome-stable_current_x86_64.rpm
+
+yum localinstall google-chrome-stable_current_x86_64.rpm -y
+
+wget https://chromedriver.storage.googleapis.com/2.41/chromedriver_linux64.zip
+unzip chromedriver_linux64.zip
+
+sudo mv chromedriver /usr/bin/chromedriver
+sudo chown root:root /usr/bin/chromedriver
+sudo chmod +x /usr/bin/chromedriver
+
+pip install behave
+pip install selenium
+pip install virtualenv
+
+
+
 sudo systemctl enable docker
 sudo systemctl enable atd
 
