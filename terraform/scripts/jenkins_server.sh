@@ -137,6 +137,9 @@ pip install virtualenv
       java -jar $jenkins_dir/jenkins-cli.jar -s http://127.0.0.1:8080/ -auth admin:$PASSWORD install-plugin $plugin
   done
 
+  sudo yum install -y amazon-efs-utils
+  sudo mount -t nfs4 -o nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2,noresvport fs-148a8195.efs.us-east-1.amazonaws.com:/ /var/lib/jenkins
+
   # Restart jenkins after installing plugins
   java -jar $jenkins_dir/jenkins-cli.jar -s http://127.0.0.1:8080 -auth admin:$PASSWORD safe-restart
 }
