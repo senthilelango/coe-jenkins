@@ -131,15 +131,6 @@ pip install behave
 pip install selenium
 pip install virtualenv
 
-# Python 3 installation
-wget https://www.python.org/ftp/python/3.6.3/Python-3.6.3.tar.xz
-tar xJf Python-3.6.3.tar.xz
-cd Python-3.6.3
-./configure
-make
-sudo make install
-sudo yum install python3-pip -y
-
 
   for plugin in $plugin_list; do
       echo "installing plugin [$plugin] ..."

@@ -1,5 +1,5 @@
 # AMI lookup for this Jenkins Server
-data "aws_ami" "jenkins_server" {
+data "aws_ami" "jenkins_server_dup" {
   most_recent      = true
   owners           = ["self"]
 
@@ -9,24 +9,24 @@ data "aws_ami" "jenkins_server" {
   }
 }
 
-resource "aws_key_pair" "jenkins_server" {
-  key_name   = "jenkins"
+resource "aws_key_pair" "jenkins_server_dup" {
+  key_name   = "jenkins_dup"
   public_key = "${file("jenkins_server.pub")}"
 }
 
 # lookup the security group of the Jenkins Server
-data "aws_security_group" "jenkins_server" {
-   id = "${aws_security_group.jenkins_server.id}"
+data "aws_security_group" "jenkins_server_dup" {
+   id = "${aws_security_group.jenkins_server_dup.id}"
   # name = "jenkins*"
   # filter {
   #   name   = "Group_Name"
-  #   values = ["jenkins_server*"]
+  #   values = ["jenkins_server_dup*"]
   # }
 }
 
 # userdata for the Jenkins server ...
-data "template_file" "jenkins_server" {
-  template = "${file("scripts/jenkins_server.sh")}"
+data "template_file" "jenkins_server_dup" {
+  template = "${file("scripts/jenkins_server_dup.sh")}"
 
   vars ={
     env = "default"
@@ -39,17 +39,17 @@ data "template_file" "jenkins_server" {
 # }
 
 # the Jenkins server itself
-resource "aws_instance" "jenkins_server" {
-  ami                    		= "${data.aws_ami.jenkins_server.image_id}"
-  instance_type          		= "t2.micro"
-  key_name               		= "${aws_key_pair.jenkins_server.key_name}"
+resource "aws_instance" "jenkins_server_dup" {
+  ami                    		= "${data.aws_ami.jenkins_server_dup.image_id}"
+  instance_type          		= "t3a.large"
+  key_name               		= "${aws_key_pair.jenkins_server_dup.key_name}"
   subnet_id              		= "${data.aws_subnet.filtered_subnets.id}"
-  vpc_security_group_ids 		= ["${data.aws_security_group.jenkins_server.id}"]
+  vpc_security_group_ids 		= ["${data.aws_security_group.jenkins_server_dup.id}"]
   iam_instance_profile   		= "Admin"
-  user_data              		= "${data.template_file.jenkins_server.rendered}"
+  user_data              		= "${data.template_file.jenkins_server_dup.rendered}"
 
   tags = {
-    Name = "jenkins_server"
+    Name = "jenkins_server_dup"
   }
 
   root_block_device {
@@ -57,18 +57,18 @@ resource "aws_instance" "jenkins_server" {
   }
 }
 
-output "jenkins_server_ami_name" {
-    value = "${data.aws_ami.jenkins_server.name}"
+output "jenkins_server_dup_ami_name" {
+    value = "${data.aws_ami.jenkins_server_dup.name}"
 }
 
-output "jenkins_server_ami_id" {
-    value = "${data.aws_ami.jenkins_server.id}"
+output "jenkins_server_dup_ami_id" {
+    value = "${data.aws_ami.jenkins_server_dup.id}"
 }
 
-output "jenkins_server_public_ip" {
-  value = "${aws_instance.jenkins_server.public_ip}"
+output "jenkins_server_dup_public_ip" {
+  value = "${aws_instance.jenkins_server_dup.public_ip}"
 }
 
-output "jenkins_server_private_ip" {
-  value = "${aws_instance.jenkins_server.private_ip}"
+output "jenkins_server_dup_private_ip" {
+  value = "${aws_instance.jenkins_server_dup.private_ip}"
 }
