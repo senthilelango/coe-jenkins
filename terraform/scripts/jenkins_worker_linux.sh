@@ -42,6 +42,8 @@ function slave_setup()
     mkdir -p /opt/jenkins-slave
     chown -R ec2-user:ec2-user /opt/jenkins-slave
 
+    
+
     # Register_slave
     JENKINS_URL="http://${server_ip}:8080"
 
@@ -121,6 +123,15 @@ EOF
   <userId>$USERID</userId>
 </slave>
 EOF
+
+# Python 3 installation
+wget https://www.python.org/ftp/python/3.6.3/Python-3.6.3.tar.xz
+tar xJf Python-3.6.3.tar.xz
+cd Python-3.6.3
+./configure
+make
+sudo make install
+sudo yum install python3-pip -y
 
   sleep 10
   
