@@ -53,6 +53,7 @@ resource "aws_instance" "jenkins_server" {
   }
 
   root_block_device {
+    volume_size = 100,
     delete_on_termination = true
   }
 }
